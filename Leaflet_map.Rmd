@@ -1,0 +1,30 @@
+---
+title: "Developing Data Products - R Markdown and Leaflet Assignment"
+author: "Becky Reimer"
+date: "12/01/2019"
+output: html_document
+fontsize: 11pt
+---
+## Interactive Leaflet Map
+
+The map I generated displays the 10 largest U.S. cities. The circles for each city correspond to their population sizes, according to 2018 population estimates available on the following Wikipedia page:
+https://en.wikipedia.org/wiki/List_of_United_States_cities_by_population
+  
+```{r map, echo=FALSE, message=FALSE}
+library(leaflet)
+
+us_cities <- data.frame(name = c("New York", "Los Angeles", "Chicago", "Houston", 
+                                 "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"),
+                        pop = c(8398748, 3990456, 2705994, 2325502, 1660272,
+                          1584138, 1532233, 1425976, 1345047, 1030119),
+                        lat = c(40.6635,34.0194, 41.8376, 29.7866,  33.5722,
+                                40.0094, 29.4724, 32.8153, 32.7933, 37.2967),
+                        lng = c(-73.9387, -118.4108, -87.6818, -95.3909, -112.0901,
+                                -75.1333, -98.5251, -117.1350, -96.7665, -121.8189))
+us_cities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 2, radius = sqrt(us_cities$pop) * 50, popup=us_cities$name)
+```
+
+
